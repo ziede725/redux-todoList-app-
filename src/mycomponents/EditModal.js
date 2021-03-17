@@ -9,8 +9,7 @@ import { toggleEditNoPayload} from "../actions/toggleModals"
 
 const EditModal =(props) =>{
   const editState = useSelector(state => state.taskReducer.toggleEditModal)
-  console.log(editState)
-
+  const id = props.id
    const [description , setDescription] = useState(""); 
    const [title, setTitle]= useState("")
     const dispatch = useDispatch() ; 

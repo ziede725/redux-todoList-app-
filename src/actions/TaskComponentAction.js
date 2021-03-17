@@ -12,3 +12,9 @@ export const save = (payload) =>{
         payload
     }
 }
+export const editDone = (payload) =>{
+    return {
+        type: "DONE",
+        payload 
+    }
+}

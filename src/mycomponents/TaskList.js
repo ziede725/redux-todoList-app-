@@ -14,14 +14,15 @@ return (
        list.map((el)=> 
           
          
-               
+               <div key = {el.id}>
                    <TaskComponent title={el.title} 
                    description={el.description} 
                    id ={el.id} 
                    isDone = {el.isDone}
-                   key = {el.id}
+              
 
                    />
+                     </div> 
             
                    
 

@@ -21,12 +21,7 @@ const taskReducer = (state= initialState, action )=> {
         }
         case "SAVE": 
         { 
-            const index = state.list.findIndex(el=> el.id == action.payload.id)
-            
-          
-            state.list[index].title = action.payload.title  ; 
-            state.list[index].description = action.payload.description ; 
-            return state ;  
+           return {...state , list:[ {title: action.payload.title , description: action.payload.description}]}
         }
         case "CREATE" : 
         
@@ -35,11 +30,6 @@ const taskReducer = (state= initialState, action )=> {
            // console.log(newList) 
            // state.list = newList; 
             return {...state,list:[...state.list , action.payload]}
-        case "TOGGLE_ADD": 
-            {
-                console.log({...state})
-                return state ; 
-            }
     
         case "TOGGLE_EDIT": 
             {
@@ -51,6 +41,10 @@ const taskReducer = (state= initialState, action )=> {
                 {
                     return {...state , toggleEditModal:!state.toggleEditModal}
                 }
+        case "DONE": 
+        {
+            return{...state , list: state.list.map((el)=> el.id === action.payload ? {...el ,isDone : !el.isDone} : el)}
+        }
         default : 
         return state ;
     }
