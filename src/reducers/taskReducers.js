@@ -5,7 +5,7 @@ const initialState ={
         description: "get some eggs" , 
         isDone : false ,
         id: 0,
-        color: "primary"
+        color: "disabled"
     }] , 
     filteredList : [] ,
     filter : false  

@@ -31,26 +31,30 @@ const useStyles = makeStyles({
 
 const TaskComponent =(props) =>{
     const classes = useStyles() ; 
+    const state = useSelector(state => state.taskReducer.list.filter(el => el.id === props.id))
     const [openModal, setOpenModal] = useState(false) ; 
     const dispatch = useDispatch() ;
-    const [color , setColor] =useState(props.iconColor)
-    console.log(props.isDone)
+    const [color , setColor] =useState(state[0].color)
+    console.log(color,props.iconColor, state[0].color)
   
     const handleModal= () =>{
         setOpenModal(!openModal) ;
    
     }
+    useEffect(()=>{
+        props.isDone? setColor("primary") : setColor("secondary")
+    },[props.isDone])
     // const renderColor = useCallback(() =>{
     //     props.isDone? setColor("primary") : setColor("secondary")
     // }
     // )
     const handleColor= () =>{
         if (props.isDone === true) {
-                setColor("secondary")
+                
                 dispatch(editDone({id: props.id , color:color}))
         }
         else {
-            setColor("primary")
+          
             dispatch(editDone({id: props.id , color: color}))
         }
     }
