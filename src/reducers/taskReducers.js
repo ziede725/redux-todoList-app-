@@ -4,9 +4,11 @@ const initialState ={
         title: "prepare dinner",
         description: "get some eggs" , 
         isDone : false ,
-        id: 0
-    }],
-    toggleEditModal : false 
+        id: 0,
+        color: "primary"
+    }] , 
+    filteredList : [] ,
+    filter : false  
     
 }
 const taskReducer = (state= initialState, action )=> {
@@ -21,7 +23,9 @@ const taskReducer = (state= initialState, action )=> {
         }
         case "SAVE": 
         { 
-           return {...state , list:[ {title: action.payload.title , description: action.payload.description}]}
+           return({...state , list: state.list.map(el=> el.id ===action.payload.id ? 
+            {...el, title:action.payload.title , description: action.payload.description} :el)}) 
+           
         }
         case "CREATE" : 
         
@@ -30,21 +34,25 @@ const taskReducer = (state= initialState, action )=> {
            // console.log(newList) 
            // state.list = newList; 
             return {...state,list:[...state.list , action.payload]}
-    
-        case "TOGGLE_EDIT": 
-            {
-             const a ={...state , toggleEditModal: !state.toggleEditModal , payload : action.payload}
-             return  a
-                 
-            }
-        case "TOGGLE_EDIT_NO":
-                {
-                    return {...state , toggleEditModal:!state.toggleEditModal}
-                }
+      
         case "DONE": 
+        // { console.log(action.payload)
         {
-            return{...state , list: state.list.map((el)=> el.id === action.payload ? {...el ,isDone : !el.isDone} : el)}
+           
+            return{...state , list: state.list.map((el)=> el.id === action.payload.id? {...el ,isDone : !el.isDone ,color:action.payload.color} : el) ,
+        filteredList:state.list.map((el)=> el.id === action.payload.id? {...el ,isDone : !el.isDone ,color: action.payload.color} : el)}
         }
+             
+        case "FILTER_DONE":
+            {
+                return{...state, filteredList: state.list.filter((el)=>el.isDone === true ) , filter: true }
+            }
+         case "Filter_UNDONE": 
+            {
+                return{...state , filteredList : state.list.filter(el=>el.isDone === false) , filter: true}
+            }
+            case "FILTER" : 
+            return {...state , filter : false }
         default : 
         return state ;
     }

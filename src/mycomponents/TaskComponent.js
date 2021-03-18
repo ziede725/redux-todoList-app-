@@ -1,11 +1,9 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { makeStyles  } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
-import { CardActionArea, CardActions, CardContent, CardHeader, Icon, Typography } from '@material-ui/core'
-import { v4 as uuidv4 } from 'uuid';
+import { CardActionArea, CardActions, CardContent, CardHeader, Icon, Typography, useFormControl } from '@material-ui/core'
 import {useDispatch, useSelector} from 'react-redux'
-import {toggleEdit } from '../actions/toggleModals'
 import {editDone, remove} from '../actions/TaskComponentAction'
 import EditModal from './EditModal'
 import CheckCircleOutlineTwoToneIcon from '@material-ui/icons/CheckCircleOutlineTwoTone';
@@ -33,22 +31,32 @@ const useStyles = makeStyles({
 
 const TaskComponent =(props) =>{
     const classes = useStyles() ; 
-  
+    const [openModal, setOpenModal] = useState(false) ; 
     const dispatch = useDispatch() ;
-    const [color , setColor] =useState("")
+    const [color , setColor] =useState(props.iconColor)
+    console.log(props.isDone)
+  
+    const handleModal= () =>{
+        setOpenModal(!openModal) ;
+   
+    }
+    // const renderColor = useCallback(() =>{
+    //     props.isDone? setColor("primary") : setColor("secondary")
+    // }
+    // )
     const handleColor= () =>{
-       if (color=== "primary")
-       {
-        setColor("") ;
-        dispatch(editDone(props.id))
-       }
-      
+        if (props.isDone === true) {
+                setColor("secondary")
+                dispatch(editDone({id: props.id , color:color}))
+        }
         else {
             setColor("primary")
-            dispatch(editDone(props.id)) ; 
-        } 
+            dispatch(editDone({id: props.id , color: color}))
+        }
     }
-    
+   
+
+  
     return (
         <>
        
@@ -65,18 +73,20 @@ const TaskComponent =(props) =>{
         </CardContent>
         
             <CardActions>
-                <Button onClick={()=>dispatch(toggleEdit(props))}>Edit</Button>
-                <EditModal id ={props.id}/>
+                <Button onClick={handleModal}>Edit</Button>
+                
                 <Button onClick={()=> {dispatch(remove(props.id))
                 }
                     }>Remove</Button>
                     <IconButton onClick={handleColor}>
+                       
                     <CheckCircleOutlineTwoToneIcon color={color}/>
                     </IconButton>
                     
             </CardActions>
-        
+         <EditModal id={props.id} open={openModal} handleModal={handleModal}/>
         </Card>
+        
        
         </div>
         </>

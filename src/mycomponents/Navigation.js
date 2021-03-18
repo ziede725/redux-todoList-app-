@@ -8,6 +8,8 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AddTask from './AddTask'
+import FilterButton from './FilterButton'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,14 +73,7 @@ export default function SearchAppBar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
+        <FilterButton></FilterButton>
           <Typography className={classes.title} variant="h6" noWrap>
             To Do App 
           </Typography>
