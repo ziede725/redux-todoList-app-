@@ -17,7 +17,7 @@ const taskReducer = (state= initialState, action )=> {
       
         case "REMOVE": 
         {
-        return {...state,list:state.list.filter(el=> el.id != action.payload)}
+        return {...state,list:state.list.filter(el=> el.id != action.payload) , filteredList:state.filteredList.filter(el=>el.id != action.payload)}
         
         
         }
@@ -49,7 +49,7 @@ const taskReducer = (state= initialState, action )=> {
             }
          case "Filter_UNDONE": 
             {
-                return{...state , filteredList : state.list.filter(el=>el.isDone === false) , filter: true}
+                return{...state , filteredList : state.list.filter(el=>el.isDone === false) , filter: true }
             }
             case "FILTER" : 
             return {...state , filter : false }

@@ -34,15 +34,15 @@ const TaskComponent =(props) =>{
     const state = useSelector(state => state.taskReducer.list.filter(el => el.id === props.id))
     const [openModal, setOpenModal] = useState(false) ; 
     const dispatch = useDispatch() ;
-    const [color , setColor] =useState(state[0].color)
-    console.log(color,props.iconColor, state[0].color)
+    const [color , setColor] =useState(!props.iconColor ? "disabled ": props.iconColor)
+    console.log(color,props)
   
     const handleModal= () =>{
         setOpenModal(!openModal) ;
    
     }
     useEffect(()=>{
-        props.isDone? setColor("primary") : setColor("secondary")
+        props.isDone? setColor("primary") : setColor("disabled")
     },[props.isDone])
     // const renderColor = useCallback(() =>{
     //     props.isDone? setColor("primary") : setColor("secondary")
@@ -58,7 +58,7 @@ const TaskComponent =(props) =>{
             dispatch(editDone({id: props.id , color: color}))
         }
     }
-   
+    
 
   
     return (

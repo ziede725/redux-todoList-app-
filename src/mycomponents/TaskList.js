@@ -16,8 +16,8 @@ return (
     <div>
    {   !filter ? (list !=null && 
        list.map((el)=> 
-          
-         
+
+            
                <div key = {el.id}>
                    <TaskComponent title={el.title} 
                    description={el.description} 
