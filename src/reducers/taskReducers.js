@@ -24,7 +24,9 @@ const taskReducer = (state= initialState, action )=> {
         case "SAVE": 
         { 
            return({...state , list: state.list.map(el=> el.id ===action.payload.id ? 
-            {...el, title:action.payload.title , description: action.payload.description} :el)}) 
+            {...el, title:action.payload.title , description: action.payload.description} :el) , 
+            filteredList:state.filteredList.map(el=> el.id ===action.payload.id ? 
+                 {...el, title:action.payload.title , description: action.payload.description} :el)}) 
            
         }
         case "CREATE" : 
